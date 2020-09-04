@@ -1,15 +1,23 @@
-var mysql = require('mysql');
+var redis = require('redis');
 
-var connection = mysql.createConnection({
-    host: 'aws-simple.cbuos43uuptu.us-east-1.rds.amazonaws.com',
-    user: 'admin',
-    password: '12345678',
-    database: 'innodb'
+var connection = redis.createClient({
+    port      : 6379,               // replace with your port
+    host      : '127.0.0.1',        // replace with your hostanme or IP address
+ //   password  : 'your password',    // replace with your password
+    // optional, if using SSL
+    // use `fs.readFile[Sync]` or another method to bring these values in
+ //   tls       : {
+   //   key  : stringValueOfKeyFile,  
+     // cert : stringValueOfCertFile,
+     // ca   : [ stringValueOfCaCertFile ]
+   // }
   });
-
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log('connected!');
+  
+connection.on("error", function(error) {
+  console.error(error);
 });
+
+
+
 // add port to listen to
 module.exports = connection;
